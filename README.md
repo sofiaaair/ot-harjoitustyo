@@ -1,5 +1,7 @@
 <h1>Ohjelmistotekniikan harjoitustyö</h1>
 
+ot
+
 <h3>Viikko1</h3>
 
 [gitlog.txt](https://github.com/sofiaaair/ot-harjoitustyo/blob/master/laskarit/viikko1/gitlog.txt)
