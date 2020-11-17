@@ -1,10 +1,12 @@
 <h1>Ohjelmistotekniikan harjoitustyö</h1>
 
-ot
 
-<h3>Viikko1</h3>
+<h3> Kulutussovellus</h3>
+Sovelluksen avulla voi seurata omaa rahankäyttöä ja rahankäytön osa-alueita.
 
-[gitlog.txt](https://github.com/sofiaaair/ot-harjoitustyo/blob/master/laskarit/viikko1/gitlog.txt)
 
-[komentorivi.txt](https://github.com/sofiaaair/ot-harjoitustyo/blob/master/laskarit/viikko1/komentorivi.txt)
+<h3> Dokumentaatio</h3>
+[Määrittelydokumentti](https://github.com/sofiaaair/ot-harjoitustyo/blob/master/dokumentaatio/maarittelydokumentti.md)
+[Tuntikirjanpito](https://github.com/sofiaaair/ot-harjoitustyo/blob/master/tuntikirjanpito.md)
+<h3>Viikko3</h3>
 
