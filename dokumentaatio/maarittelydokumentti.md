@@ -9,7 +9,7 @@ Sovelluksella on vain yhdenlaisia käyttäjärooleja
 
 *Seuranta tapahtuu syöttämällä sovellukseen käytetty rahasumma ja teema, mihin raha on mennyt
 
-*Teemoja ovat: asuminen, vapaa-aika, ruoka, ostokset, matkustelu
+*Teemoja ovat mm : asuminen, vapaa-aika, ruoka, ostokset, matkustelu
 
 *Sovelluksella voi tarkastella toteutunutta rahankäyttöä ja tehdä suunnitelmia tulevista menoista
 

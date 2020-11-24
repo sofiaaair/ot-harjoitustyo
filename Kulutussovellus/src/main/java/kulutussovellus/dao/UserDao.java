@@ -6,19 +6,31 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.SQLException;
+import java.sql.Connection;
 import java.util.List;
 import kulutussovellus.domain.User;
 
 
 public class UserDao implements Dao<User, Integer>{
+    
+   /* void connectToDatabase() throws SQLException{
+        Connection db = DriverManager.getConnection("jdbc:sqlite:database.db"); 
+        Statement s = db.createStatement();
+    }*/
 
     @Override
-    public void create(User object) throws SQLException {
-    /*    Connection connection = DriverManager.getConnection("jdbc:sqlite:database.db");
-        Statement s = connection.createStatement();
-        s.execute()*/
+    public void create(User user) throws SQLException {
+        Connection connection = DriverManager.getConnection("jdbc:sqlite:database.db");
+        PreparedStatement statement = connection.prepareStatement("INSERT INTO USER"
+        + "(name, username, password)"
+        + "VALUES(?,?,?)");
+        statement.setString(1, user.getName());
+        statement.setString(2, user.getUsername());
+        statement.setString(3, user.getPassword());
         
-       
+        statement.executeUpdate();
+        statement.close();
+        connection.close();
     }
 
     @Override

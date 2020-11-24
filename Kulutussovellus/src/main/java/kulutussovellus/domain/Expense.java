@@ -8,6 +8,15 @@ public class Expense {
     int amount;
     String type;
     
+    public Expense(){
+        
+    }
+    
+    public Expense(int amount, String type){
+        this.amount = amount;
+        this.type = type;
+    }
+    
     public Expense(int id, int amount, String type){
         this.id = id;
         this.amount = amount;
@@ -32,5 +41,9 @@ public class Expense {
     
     public String getType(){
         return this.type;
+    }
+    
+    public String toString(){
+        return this.amount + " " + this.type;
     }
 }

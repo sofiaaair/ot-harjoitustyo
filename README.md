@@ -2,6 +2,7 @@
 
 
 <h3> Kulutussovellus</h3>
+
 Sovelluksen avulla voi seurata omaa rahankäyttöä ja rahankäytön osa-alueita.
 
 
