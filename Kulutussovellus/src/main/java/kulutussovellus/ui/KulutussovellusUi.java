@@ -39,19 +39,23 @@ public class KulutussovellusUi extends Application {
         
         
        TablesDao TablesDao = new TablesDao();
-        TablesDao.create();
+       TablesDao.create();
         
- 
        ExpenseDao ExpenseDao = new ExpenseDao();
-        
+       
+       GridPane welcomeScreen = new GridPane();
+       Label welcomeText = new Label("Welcome to expense tracking application! ");
+       
+
+       
+       
         
         GridPane screen = new GridPane();
+        Label text = new Label("Enter the amount and type of expense");
         
-        Label text = new Label("Syötä summa ja kulun tyyppi");
-        
-        Label amountlabel = new Label("Summa: ");
+        Label amountlabel = new Label("Amount: ");
         TextField amounttext = new TextField();
-        Label typelabel = new Label("Kulun tyyppi: ");
+        Label typelabel = new Label("Type of expense: ");
         TextField typetext = new TextField();
         
         HBox hb2 = new HBox();
@@ -62,9 +66,9 @@ public class KulutussovellusUi extends Application {
         
         VBox vb = new VBox();
         vb.getChildren().addAll(text, hb, hb2);
-        Button sendbutton = new Button("Syötä meno");
+        Button sendbutton = new Button("Enter");
         
-        Button button = new Button("Syötetyt menot");
+        Button button = new Button("Entered expenses");
         
         screen.add(vb, 0, 0);
         screen.add(sendbutton, 0,1);
@@ -80,11 +84,11 @@ public class KulutussovellusUi extends Application {
         
         
         
-        Label text2 = new Label("Menot:");
+        Label text2 = new Label("Expenses:");
         GridPane screen2 = new  GridPane();
         Label expenses = new Label();
-        Button showButton = new Button("Näytä");
-        Button backToFirstPage= new Button("Takaisin");
+        Button showButton = new Button("Show expenses");
+        Button backToFirstPage= new Button("Return");
         
         showButton.setOnAction((event)->{
             try{

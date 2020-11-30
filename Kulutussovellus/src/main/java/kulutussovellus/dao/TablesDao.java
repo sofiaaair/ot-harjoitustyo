@@ -27,8 +27,9 @@ public class TablesDao{
         Statement s = db.createStatement();
         s.execute("BEGIN TRANSACTION");
         s.execute("PRAGMA foreign_keys = ON");
-        s.execute("CREATE TABLE Expense (id INTEGER AUTO_INCREMENT PRIMARY KEY, amount INTEGER, type TEXT)");
-        s.execute("CREATE TABLE Plan(id INTEGER AUTO_INCREMENT PRIMARY KEY, type TEXT, amount INTEGER)");
+        s.execute("CREATE TABLE User (id INTEGER AUTO_INCREMENT PRIMARY KEY, name TEXT, username TEXT UNIQUE, password TEXT)");
+        s.execute("CREATE TABLE Expense (id INTEGER AUTO_INCREMENT PRIMARY KEY, amount INTEGER, type TEXT user_id INTEGER REFERENCES User)");
+        s.execute("CREATE TABLE Plan(id INTEGER AUTO_INCREMENT PRIMARY KEY, type TEXT, amount INTEGER user_id INTEGER REFERENCES User)");
         s.execute("COMMIT");
                 }catch(SQLException e){
                     System.out.println("Virhe tietokannan luomisessa");
