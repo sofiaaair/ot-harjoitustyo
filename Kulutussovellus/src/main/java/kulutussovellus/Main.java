@@ -1,4 +1,4 @@
-
+package kulutussovellus;
 
 import java.sql.SQLException;
 import kulutussovellus.ui.KulutussovellusUi;
