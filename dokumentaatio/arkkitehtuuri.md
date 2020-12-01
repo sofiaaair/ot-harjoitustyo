@@ -19,5 +19,6 @@ Käyttöliittymän toteutus on toistaiseksi vielä kesken, mutta se tulee sisäl
 Näkymien toteutus tulee olemaan Scene-olioina, joista yksi kerrallaan on nähtävissä sovelluksen stage-oliossa.
 
 
-![Image of Kulunlisays]
-(https://github.com/sofiaaair/ot-harjoitustyo/tree/master/dokumentaatio/kuvat/summanlisays.png)
+
+![Image of Kulunlisays](https://github.com/sofiaaair/ot-harjoitustyo/blob/master/dokumentaatio/kuvat/summanlisays.png)
+
