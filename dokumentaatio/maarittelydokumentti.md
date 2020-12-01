@@ -1,15 +1,17 @@
 <h1> Kulunseurantasovellus </h1>
 
 <h2> Käyttäjät </h2>
-Sovelluksella on vain yhdenlaisia käyttäjärooleja
+Sovellukseen voi luoda tunnuksen ja kirjautua sisään.
+Käyttäjällä on nimi, käyttäjänimi ja salasana.
+Käyttäjä voi seurata omaa rahankäyttöään syöttämällä tietoa menoista.
 
 <h2> Suunnitellut toiminnallisuudet</h2>
 
-*Käyttäjä voi seurata omaa rahankulutustaan sovelluksen avulla
+* Käyttäjä voi seurata omaa rahankulutustaan sovelluksen avulla 
 
-*Seuranta tapahtuu syöttämällä sovellukseen käytetty rahasumma ja teema, mihin raha on mennyt
+* Seuranta tapahtuu syöttämällä sovellukseen käytetty rahasumma ja teema, mihin raha on mennyt "TEHTY"
 
-*Teemoja ovat mm : asuminen, vapaa-aika, ruoka, ostokset, matkustelu
+* Teemoja ovat mm : asuminen, vapaa-aika, ruoka, ostokset, matkustelu
 
-*Sovelluksella voi tarkastella toteutunutta rahankäyttöä ja tehdä suunnitelmia tulevista menoista
+* Sovelluksella voi tarkastella toteutunutta rahankäyttöä ja tehdä suunnitelmia tulevista menoista "TOTEUTUNEET MENOT TEHTY"
 
