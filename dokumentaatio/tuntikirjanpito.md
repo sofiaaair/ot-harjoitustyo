@@ -7,3 +7,4 @@ Päivä | Aika | Tekeminen
 24.11 | 3 | Aikaisemman suunnittelun toteutusta, viilailua
 30.11 | 4 | Checkstylen konfigurointi ja testikattavuuksien päivitystä
 1.12  |10 | Testikattavuuden parantelu, toiminnallisuuden päivitystä
+YHTEENSÄ: | 28 |

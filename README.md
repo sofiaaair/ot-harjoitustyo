@@ -10,6 +10,7 @@ Sovelluksen avulla voi seurata omaa rahankäyttöä ja rahankäytön osa-alueita
 
 [Määrittelydokumentti](https://github.com/sofiaaair/ot-harjoitustyo/blob/master/dokumentaatio/maarittelydokumentti.md)
 
-[Tuntikirjanpito](https://github.com/sofiaaair/ot-harjoitustyo/blob/master/tuntikirjanpito.md)
+[Tuntikirjanpito](https://github.com/sofiaaair/ot-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md)
 
+[Arkkitehtuuri](https://github.com/sofiaaair/ot-harjoitustyo/blob/master/dokumentaatio/arkkitehtuuri.md)
 

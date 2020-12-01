@@ -124,8 +124,10 @@ public class KulutussovellusUi extends Application {
             stage.setScene(addExpenseScene);
         });
         sendbutton.setOnAction((event)->{
-            Expense e = new Expense(Integer.valueOf(amounttext.getText()), typetext.getText());
-           try {
+            try {
+            int luku = expenseDao.list().size() + 1;
+            Expense e = new Expense(luku, Integer.valueOf(amounttext.getText()), typetext.getText());
+           
                expenseDao.create(e);
            } catch (SQLException ex) {
                
