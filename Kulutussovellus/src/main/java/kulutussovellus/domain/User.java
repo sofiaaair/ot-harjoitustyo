@@ -8,7 +8,7 @@ public class User {
     String username;
     String password;
     
-    public User(int id, String name, String username){
+    public User(int id, String name, String username, String password) {
         this.id = id;
         this.name = name;
         this.username = username;
@@ -16,33 +16,38 @@ public class User {
         
     }
     
-    public String getName(){
+    public String getName() {
         return this.name;
     }
     
-    public String getUsername(){
+    public String getUsername() {
         return this.username;
     }
     
-    public int getId(){
+    public int getId() {
         return this.id;
     }
     
-    public String getPassword(){
+    public String getPassword() {
         return this.password;
     }
     
-    public void setName(String name){
+    public void setName(String name) {
         this.name = name;
     }
     
-    public void setUsername(String username){
+    public void setUsername(String username) {
         this.username = username;
     }
     
     
-    public void setId(int id){
-        this.id = id;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    
+    @Override
+    public String toString() {
+        return "Id: " + getId() + " Name: " + getName() + " Username: " + getUsername() + " Password: " + getPassword();
     }
     
 }

@@ -7,55 +7,123 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.SQLException;
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 import kulutussovellus.domain.User;
 
 
-public class UserDao implements Dao<User, Integer>{
+public class UserDao implements Dao<User, Integer> {
     
-   /* void connectToDatabase() throws SQLException{
-        Connection db = DriverManager.getConnection("jdbc:sqlite:database.db"); 
-        Statement s = db.createStatement();
-    }*/
+    TablesDao tablesDao = new TablesDao();
+    Connection connection;
+    PreparedStatement statement;
+           
 
     @Override
     public void create(User user) throws SQLException {
-        Connection connection = DriverManager.getConnection("jdbc:sqlite:database.db");
-        PreparedStatement statement = connection.prepareStatement("INSERT INTO USER"
-        + "(name, username, password)"
-        + "VALUES(?,?,?)");
-        statement.setString(1, user.getName());
-        statement.setString(2, user.getUsername());
-        statement.setString(3, user.getPassword());
         
-        statement.executeUpdate();
-        statement.close();
-        connection.close();
+        try {
+            connection = tablesDao.connectToDatabase();
+            statement = connection.prepareStatement("INSERT INTO User"
+            + "(id ,name, username, password)"
+            + "VALUES(?,?,?,?)");
+            statement.setInt(1, user.getId());
+            statement.setString(2, user.getName());
+            statement.setString(3, user.getUsername());
+            statement.setString(4, user.getPassword());
+        
+            statement.executeUpdate();
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            
+        }
     }
 
     @Override
     public User read(Integer key) throws SQLException {
-  /*      String output = "";
-        Connection connection = DriverManager.getConnection("jdbc:sqlite:database.db");
-        PreparedStatement statement = connection.prepareStatement("SELECT * FROM User");
-        ResultSet resultSet = statement.executeQuery();
+        connection = tablesDao.connectToDatabase();
+        statement = connection.prepareStatement("SELECT * FROM User WHERE id = ?");
+        statement.setInt(1, key);
+        ResultSet rs = statement.executeQuery();
+        if (!rs.next()) {
+            return null;
+        }
         
-*/ return null;
+        User e = new User(rs.getInt("id"), rs.getString("name"), rs.getString("username"), rs.getString("password"));
+        
+        statement.close();
+        rs.close();
+        connection.close();
+        
+        return e;
     }
 
     @Override
-    public User update(User object) throws SQLException {
-        return null;
+    public User update(User user) throws SQLException {
+        
+        
+        connection = tablesDao.connectToDatabase();
+        statement = connection.prepareStatement("UPDATE User SET name = ?, username = ?, password = ? WHERE id = ?");
+        statement.setString(1, user.getName());
+        statement.setString(2, user.getUsername());
+        statement.setString(3, user.getPassword());
+        statement.setInt(4, user.getId());
+        statement.executeUpdate();
+        
+        User newUser = read(user.getId());
+        statement.close();
+        connection.close();
+        
+        return newUser;
     }
 
     @Override
     public void delete(Integer key) throws SQLException {
+        try {
+            connection = tablesDao.connectToDatabase();
+            statement = connection.prepareStatement("DELETE FROM User WHERE id= ? ");
+            statement.setInt(1, key);
+            statement.executeUpdate();
+            statement.close();
+            connection.close();
+            
+        } catch (SQLException e) {
+            
+        }        
         
     }
 
     @Override
     public List<User> list() throws SQLException {
-        return null;
+        List<User> list = new ArrayList<>();
+        connection = tablesDao.connectToDatabase();
+        statement = connection.prepareStatement("SELECT * FROM User");
+        ResultSet rs = statement.executeQuery();
+        while (rs.next()) {
+            list.add(new User(rs.getInt("id"), rs.getString("name"), rs.getString("username"), rs.getString("password")));
+        }
+        statement.close();
+        rs.close();
+        connection.close();
+        
+        return list;
+       
+    }
+    
+    
+    public void removeAll() {
+        
+        try {
+            connection = tablesDao.connectToDatabase();
+            statement = connection.prepareStatement("DELETE FROM User");
+            statement.executeUpdate();
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            
+        }
+        
     }
     
 }

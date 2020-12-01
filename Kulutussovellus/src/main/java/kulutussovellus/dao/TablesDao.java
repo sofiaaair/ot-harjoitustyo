@@ -12,31 +12,32 @@ import java.sql.Statement;
 import java.util.List;
 import static javafx.application.Application.launch;
 
-/**
- *
- * @author airassof
- */
-public class TablesDao{
+
+public class TablesDao {
 
     
    
-   public void create() throws SQLException{
+    public void create() throws SQLException {
        
-       try{
-       Connection db = DriverManager.getConnection("jdbc:sqlite:database.db");         
-        Statement s = db.createStatement();
-        s.execute("BEGIN TRANSACTION");
-        s.execute("PRAGMA foreign_keys = ON");
-        s.execute("CREATE TABLE User (id INTEGER AUTO_INCREMENT PRIMARY KEY, name TEXT, username TEXT UNIQUE, password TEXT)");
-        s.execute("CREATE TABLE Expense (id INTEGER AUTO_INCREMENT PRIMARY KEY, amount INTEGER, type TEXT user_id INTEGER REFERENCES User)");
-        s.execute("CREATE TABLE Plan(id INTEGER AUTO_INCREMENT PRIMARY KEY, type TEXT, amount INTEGER user_id INTEGER REFERENCES User)");
-        s.execute("COMMIT");
-                }catch(SQLException e){
-                    System.out.println("Virhe tietokannan luomisessa");
-                }
-       
+        try {
+            Connection db = DriverManager.getConnection("jdbc:sqlite:database.db");         
+            Statement s = db.createStatement();
+            s.execute("BEGIN TRANSACTION");
+            s.execute("PRAGMA foreign_keys = ON");
+            s.execute("CREATE TABLE User (id INTEGER AUTO_INCREMENT PRIMARY KEY UNIQUE, name TEXT, username TEXT UNIQUE, password TEXT)");
+            s.execute("CREATE TABLE Expense (id INTEGER AUTO_INCREMENT PRIMARY KEY, amount INTEGER, type TEXT user_id INTEGER REFERENCES User)");
+            s.execute("CREATE TABLE Plan(id INTEGER AUTO_INCREMENT PRIMARY KEY, type TEXT, amount INTEGER user_id INTEGER REFERENCES User)");
+            s.execute("COMMIT");
+        } catch (SQLException e) {
+            System.out.println("Virhe tietokannan luomisessa");
         }
-       
-   }
+    }
+   
+    public Connection connectToDatabase() throws SQLException {
+        Connection db = DriverManager.getConnection("jdbc:sqlite:database.db");
+        return db;
+
+    }  
+}
     
 

@@ -30,6 +30,8 @@ import kulutussovellus.domain.Expense;
 
 public class KulutussovellusUi extends Application {
     
+    TablesDao tablesDao;
+    ExpenseDao expenseDao;
     
     
     @Override
@@ -38,14 +40,23 @@ public class KulutussovellusUi extends Application {
         
         
         
-       TablesDao TablesDao = new TablesDao();
-       TablesDao.create();
+       tablesDao = new TablesDao();
+       tablesDao.create();
         
-       ExpenseDao ExpenseDao = new ExpenseDao();
+       expenseDao = new ExpenseDao();
        
        GridPane welcomeScreen = new GridPane();
        Label welcomeText = new Label("Welcome to expense tracking application! ");
+       Label usernameLabel = new Label("Username: ");
+       Label passwordLabel = new Label("Password: ");
+       TextField usernameTextField= new TextField();
+       PasswordField passwordField = new PasswordField();
        
+       HBox usernameLabelHb = new HBox();
+       usernameLabelHb.getChildren().addAll(usernameLabel, usernameTextField);
+       
+       HBox passwordLabelHb = new HBox();
+       passwordLabelHb.getChildren().addAll(passwordLabel, passwordField);
 
        
        
@@ -58,14 +69,14 @@ public class KulutussovellusUi extends Application {
         Label typelabel = new Label("Type of expense: ");
         TextField typetext = new TextField();
         
-        HBox hb2 = new HBox();
-        hb2.getChildren().addAll(typelabel, typetext);
+        HBox typeLabelHb = new HBox();
+        typeLabelHb.getChildren().addAll(typelabel, typetext);
         
-        HBox hb = new HBox();
-        hb.getChildren().addAll(amountlabel, amounttext);
+        HBox amountLabelHb = new HBox();
+        amountLabelHb.getChildren().addAll(amountlabel, amounttext);
         
         VBox vb = new VBox();
-        vb.getChildren().addAll(text, hb, hb2);
+        vb.getChildren().addAll(text, amountLabelHb, typeLabelHb);
         Button sendbutton = new Button("Enter");
         
         Button button = new Button("Entered expenses");
@@ -93,7 +104,7 @@ public class KulutussovellusUi extends Application {
         showButton.setOnAction((event)->{
             try{
                 String textToAdd = "";
-                List<Expense> expensesOnTheList = ExpenseDao.list();
+                List<Expense> expensesOnTheList = expenseDao.list();
                 for(Expense e: expensesOnTheList){
                     textToAdd= ""+ textToAdd +"\n" + e.toString();
                 }
@@ -115,9 +126,9 @@ public class KulutussovellusUi extends Application {
         sendbutton.setOnAction((event)->{
             Expense e = new Expense(Integer.valueOf(amounttext.getText()), typetext.getText());
            try {
-               ExpenseDao.create(e);
+               expenseDao.create(e);
            } catch (SQLException ex) {
-               Logger.getLogger(KulutussovellusUi.class.getName()).log(Level.SEVERE, null, ex);
+               
            }
            amounttext.clear();
            typetext.clear();

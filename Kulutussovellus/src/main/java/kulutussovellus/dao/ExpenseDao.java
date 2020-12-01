@@ -12,68 +12,116 @@ import java.util.List;
 import kulutussovellus.domain.Expense;
 
 
-public class ExpenseDao implements Dao<Expense, Integer>{
+public class ExpenseDao implements Dao<Expense, Integer> {
+    
+    TablesDao tablesDao = new TablesDao();
+    Connection connection;
+    PreparedStatement s;
+    SQLException e = new SQLException();
 
     @Override
     public void create(Expense expense) throws SQLException {
-       Connection connection = DriverManager.getConnection("jdbc:sqlite:database.db");
-        PreparedStatement s = connection.prepareStatement("INSERT INTO Expense"
-        + "(amount, type)"
-        + "VALUES(?,?)"); 
-        s.setInt(1, expense.getAmount());
-        s.setString(2, expense.getType());
-        s.executeUpdate();
-        s.close();
-        connection.close();
         
+        try {
+            connection = tablesDao.connectToDatabase();
+            PreparedStatement s = connection.prepareStatement("INSERT INTO Expense"
+                + "(id, amount, type)"
+                + "VALUES(?,?,?)"); 
+            s.setInt(1, expense.getId());
+            s.setInt(2, expense.getAmount());
+            s.setString(3, expense.getType());
+            s.executeUpdate();
+            s.close();
+            connection.close();
+        } catch (SQLException e) {
+            
+        }
         
     }
 
     @Override
     public Expense read(Integer key) throws SQLException {
-       Connection connection = DriverManager.getConnection("jdbc:sqlite:database.db");
-        PreparedStatement s= connection.prepareStatement("SELECT* FROM Expense WHERE id = ?");
+
+        connection = tablesDao.connectToDatabase();
+        s = connection.prepareStatement("SELECT * FROM Expense WHERE id = ?");
         s.setInt(1, key);
         ResultSet rs = s.executeQuery();
-        if(!rs.next()){
+        if (!rs.next()) {
             return null;
         }
         
-        Expense e = new Expense(rs.getInt("id"),rs.getInt("amount"), rs.getString("type"));
+        Expense e = new Expense(rs.getInt("id"), rs.getInt("amount"), rs.getString("type"));
+        
         s.close();
         rs.close();
+        connection.close();
         
         return e;
+
     }
 
     @Override
-    public Expense update(Expense object) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); 
+    public Expense update(Expense expense) throws SQLException {
+        
+        connection = tablesDao.connectToDatabase();
+        s = connection.prepareStatement("UPDATE Expense SET amount = ?, type = ? WHERE id = ?");
+        s.setInt(1, expense.getAmount());
+        s.setString(2, expense.getType());
+        s.setInt(3, expense.getId());
+        s.executeUpdate();
+        
+        Expense newExpense = read(expense.getId());
+        s.close();
+        connection.close();
+        
+        return newExpense;
+        
     }
 
     @Override
     public void delete(Integer key) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); 
+        try {
+            connection = tablesDao.connectToDatabase();
+            s = connection.prepareStatement("DELETE FROM Expense WHERE id = ? ");
+            s.setInt(1, key);
+            s.executeUpdate();
+            s.close();
+            connection.close();
+            
+        } catch (SQLException e) {
+            
+        }
     }
 
     @Override
     public List<Expense> list() throws SQLException {
-        Connection connection = DriverManager.getConnection("jdbc:sqlite:database.db");
-        PreparedStatement s = connection.prepareStatement("SELECT * FROM Expense");
-        ResultSet rs = s.executeQuery();
-        if(!rs.next()){
-            return null;
-        }
-        
         List<Expense> list = new ArrayList<>();
-        while(rs.next()){
-                list.add(new Expense(rs.getInt("id"), rs.getInt("amount"), rs.getString("type")));
+        connection = tablesDao.connectToDatabase();
+        s = connection.prepareStatement("SELECT * FROM Expense");
+        ResultSet rs = s.executeQuery();
+        while (rs.next()) {
+            list.add(new Expense(rs.getInt("id"), rs.getInt("amount"), rs.getString("type")));
         }
         s.close();
         rs.close();
+        connection.close();
         
         return list;
        
+        
+    }
+    
+    public void removeAll() {
+        
+        try {
+            connection = tablesDao.connectToDatabase();
+            s = connection.prepareStatement("DELETE FROM Expense");
+            s.executeUpdate();
+            s.close();
+            connection.close();
+        } catch (SQLException e) {
+            
+        }
         
     }
     
