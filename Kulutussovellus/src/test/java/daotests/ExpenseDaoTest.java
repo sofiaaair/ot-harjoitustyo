@@ -1,3 +1,5 @@
+package daotests;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -31,24 +33,19 @@ public class ExpenseDaoTest {
     public ExpenseDaoTest() {
     }
     
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
+
     
     @Before
     public void setUp() {
         expenseDao = new ExpenseDao();
-        expense = new Expense(1, 500, "Asuminen");
+        expense = new Expense(1, 500, "Asuminen",1);
       
        
     }
     
     @After
     public void tearDown() {
+        expenseDao.removeAll();
     }
 
 
@@ -57,10 +54,10 @@ public class ExpenseDaoTest {
     @Test
     public void createMethodWorks() throws Exception{
         
-        expenseDao.removeAll();
-        expenseDao.create(new Expense(50, 480, "Vapaa-aika"));
-        assertEquals(480, expenseDao.read(50).getAmount());
-        expenseDao.removeAll();
+        
+        expenseDao.create(new Expense(50, 480, "Vapaa-aika",2));
+        assertTrue(expenseDao.read(50).getAmount()==480);
+        
         
 
 
@@ -68,52 +65,52 @@ public class ExpenseDaoTest {
     
     @Test
     public void readMethodWorks() throws Exception{
-        expenseDao.removeAll();
+        
         expenseDao.create(expense);
         Expense another = expenseDao.read(1);
         int id = another.getId();
         assertEquals(expense.getId(), id);
-        expenseDao.removeAll();
+        
     }
     
     @Test
     public void deleteMethodWorks() throws Exception{
-        expenseDao.removeAll();
+        
         
         expenseDao.create(expense);
-        expenseDao.create(new Expense(2, 100, "Ruoka"));
-        expenseDao.create(new Expense(3, 600, "Asuminen"));
+        expenseDao.create(new Expense(2, 100.00, "Ruoka",2));
+        expenseDao.create(new Expense(3, 600.80, "Asuminen",3));
    
         expenseDao.delete(2);
         
         assertEquals(null, expenseDao.read(2));
         
-        expenseDao.removeAll();
+        
         
       
     }
     
     @Test
     public void updateChangesAmount() throws Exception{
-        expenseDao.removeAll();
         
-        expenseDao.create(new Expense(40, 500, "Asuminen"));
-        Expense newExpense = new Expense(40, 400, "Ruoka");
+        
+        expenseDao.create(new Expense(40, 500, "Asuminen",2));
+        Expense newExpense = new Expense(40, 400, "Ruoka",3);
         expenseDao.update(newExpense);
-        assertEquals(400, expenseDao.read(40).getAmount());
-        expenseDao.removeAll();
+        assertTrue(expenseDao.read(40).getAmount()==400);
+        
         
     }
     
     @Test
     public void updateChangesType() throws Exception{
-        expenseDao.removeAll();
         
-        expenseDao.create(new Expense(40, 500, "Asuminen"));
-        Expense newExpense = new Expense(40, 400, "Ruoka");
+        
+        expenseDao.create(new Expense(40, 500, "Asuminen", 2));
+        Expense newExpense = new Expense(40, 400, "Ruoka", 3);
         expenseDao.update(newExpense);
         assertEquals("Ruoka", expenseDao.read(40).getType());
-        expenseDao.removeAll();
+        
         
         
     }
@@ -121,8 +118,8 @@ public class ExpenseDaoTest {
     @Test
     public void removeAllRemovesAll() throws Exception{
         expenseDao.create(expense);
-        expenseDao.create(new Expense(2, 500, "Ruoka"));
-        expenseDao.create(new Expense(3, 780, "Ostokset"));
+        expenseDao.create(new Expense(2, 500, "Ruoka", 2));
+        expenseDao.create(new Expense(3, 780, "Ostokset", 3));
         expenseDao.removeAll();
         assertEquals(0, expenseDao.list().size());
         
@@ -132,29 +129,48 @@ public class ExpenseDaoTest {
     
     public void listReturnsRigtSize() throws Exception{
         
-        expenseDao.removeAll();
+       
         expenseDao.create(expense);
-        expenseDao.create(new Expense(2, 200, "Ruoka"));
-        expenseDao.create(new Expense(3, 300, "Ostokset"));
-        expenseDao.create(new Expense(4, 500, "Asuminen"));
+        expenseDao.create(new Expense(2, 200, "Ruoka", 2));
+        expenseDao.create(new Expense(3, 300, "Ostokset", 2));
+        expenseDao.create(new Expense(4, 500, "Asuminen", 3));
         
         List<Expense> expenseList = expenseDao.list();
         
         assertEquals(4, expenseList.size());
-        expenseDao.removeAll();
+        
     }
     
     @Test
-    public void listReturnsRightExpense() throws Exception{
+    public void listReturnsRightExpense() throws Exception {
         
-        expenseDao.removeAll();
+       
         expenseDao.create(expense);
         List<Expense> expenseList = expenseDao.list();
         
         assertEquals(expense.toString(), expenseList.get(0).toString());
-        expenseDao.removeAll();
+        
         
         
     }
     
+    @Test
+    public void listUsingIdReturnsRigthSize() throws Exception {
+        
+        expenseDao.create(expense);
+        expenseDao.create(new Expense(2, 200, "Ruoka", 1));
+        expenseDao.create(new Expense(3, 300, "Ostokset", 1));
+        expenseDao.create(new Expense(4, 500, "Asuminen", 2));
+        
+        List<Expense> expenseList = expenseDao.listUsingId(1);
+        assertTrue(expenseList.size()==3);
+        
+    }
+    
+    
+    @Test
+    public void listUsingIdSizeIsZero() throws Exception {
+        List<Expense> expenseList = expenseDao.listUsingId(1);
+        assertEquals(0, expenseList.size());
+    }
 }

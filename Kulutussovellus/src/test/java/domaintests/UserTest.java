@@ -1,3 +1,5 @@
+package domaintests;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -19,23 +21,12 @@ public class UserTest {
     public UserTest() {
     }
     
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
     
     @Before
     public void setUp() {
         user = new User(1, "Matti", "Matti1", "1234");
     }
     
-    @After
-    public void tearDown() {
-    }
-
 
     @Test
     public void constructorSetCorrectValues() {

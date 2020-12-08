@@ -17,27 +17,28 @@ public class TablesDao {
 
     
    
-    public void create() throws SQLException {
+    public void create() {
        
         try {
             Connection db = DriverManager.getConnection("jdbc:sqlite:database.db");         
             Statement s = db.createStatement();
             s.execute("BEGIN TRANSACTION");
             s.execute("PRAGMA foreign_keys = ON");
-            s.execute("CREATE TABLE User (id INTEGER AUTO_INCREMENT PRIMARY KEY UNIQUE, name TEXT, username TEXT UNIQUE, password TEXT)");
-            s.execute("CREATE TABLE Expense (id INTEGER AUTO_INCREMENT PRIMARY KEY, amount INTEGER, type TEXT user_id INTEGER REFERENCES User)");
-            s.execute("CREATE TABLE Plan(id INTEGER AUTO_INCREMENT PRIMARY KEY, type TEXT, amount INTEGER user_id INTEGER REFERENCES User)");
+            s.execute("CREATE TABLE User (id INTEGER PRIMARY KEY, name TEXT, username TEXT UNIQUE, password TEXT )");
+            s.execute("CREATE TABLE Expense (id INTEGER PRIMARY KEY, amount DOUBLE, type TEXT, user_id INTEGER REFERENCES User(id))");
+            s.execute("CREATE TABLE Plan(id INTEGER PRIMARY KEY, type TEXT, amount DOUBLE, user_id INTEGER REFERENCES User(id))");
             s.execute("COMMIT");
         } catch (SQLException e) {
-            System.out.println("Virhe tietokannan luomisessa");
+            System.out.println("Missing database or database already exists");
         }
     }
    
     public Connection connectToDatabase() throws SQLException {
         Connection db = DriverManager.getConnection("jdbc:sqlite:database.db");
         return db;
-
+ 
     }  
+    
 }
     
 

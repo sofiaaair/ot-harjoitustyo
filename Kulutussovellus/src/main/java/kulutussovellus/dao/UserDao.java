@@ -22,22 +22,20 @@ public class UserDao implements Dao<User, Integer> {
     @Override
     public void create(User user) throws SQLException {
         
-        try {
-            connection = tablesDao.connectToDatabase();
-            statement = connection.prepareStatement("INSERT INTO User"
-            + "(id ,name, username, password)"
-            + "VALUES(?,?,?,?)");
-            statement.setInt(1, user.getId());
-            statement.setString(2, user.getName());
-            statement.setString(3, user.getUsername());
-            statement.setString(4, user.getPassword());
+
+        connection = tablesDao.connectToDatabase();
+        statement = connection.prepareStatement("INSERT INTO User"
+        + "(id ,name, username, password)"
+        + "VALUES(?,?,?,?)");
+        statement.setInt(1, user.getId());
+        statement.setString(2, user.getName());
+        statement.setString(3, user.getUsername());
+        statement.setString(4, user.getPassword());
         
-            statement.executeUpdate();
-            statement.close();
-            connection.close();
-        } catch (SQLException e) {
-            
-        }
+        statement.executeUpdate();
+        statement.close();
+        connection.close();
+
     }
 
     @Override
@@ -80,17 +78,15 @@ public class UserDao implements Dao<User, Integer> {
 
     @Override
     public void delete(Integer key) throws SQLException {
-        try {
-            connection = tablesDao.connectToDatabase();
-            statement = connection.prepareStatement("DELETE FROM User WHERE id= ? ");
-            statement.setInt(1, key);
-            statement.executeUpdate();
-            statement.close();
-            connection.close();
+
+        connection = tablesDao.connectToDatabase();
+        statement = connection.prepareStatement("DELETE FROM User WHERE id= ? ");
+        statement.setInt(1, key);
+        statement.executeUpdate();
+        statement.close();
+        connection.close();
             
-        } catch (SQLException e) {
-            
-        }        
+      
         
     }
 
@@ -109,6 +105,29 @@ public class UserDao implements Dao<User, Integer> {
         
         return list;
        
+    }
+    
+    public User readUsingUsername(String name, String password) throws SQLException {
+        
+        connection = tablesDao.connectToDatabase();
+        statement = connection.prepareStatement("SELECT * FROM User where username = ?");
+        statement.setString(1, name);
+        ResultSet rs = statement.executeQuery();
+        if (!rs.next()) {
+            return null;
+        }
+        
+        User user = new User(rs.getInt("id"), rs.getString("name"), rs.getString("username"), rs.getString("password"));
+        
+        statement.close();
+        rs.close();
+        connection.close();
+        if (password.equals(user.getPassword())) {
+            return user;
+        }
+        
+        return null;
+
     }
     
     

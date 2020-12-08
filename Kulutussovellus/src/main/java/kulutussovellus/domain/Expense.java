@@ -5,7 +5,7 @@ package kulutussovellus.domain;
 public class Expense {
     
     int id;
-    int amount;
+    double amount;
     String type;
     int userid;
     
@@ -13,22 +13,21 @@ public class Expense {
         
     }
     
-    public Expense(int amount, String type) {
-        this.amount = amount;
-        this.type = type;
-    }
     
-    public Expense(int id, int amount, String type) {
+    
+    
+    public Expense(int id, double amount, String type, int userid) {
         this.id = id;
         this.amount = amount;
         this.type = type;
+        this.userid = userid;
     }
     
     public void setType(String type) {
         this.type = type;
     }
     
-    public void setAmount(int amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
     
@@ -40,12 +39,16 @@ public class Expense {
         return this.id;
     }
     
-    public int getAmount() {
+    public double getAmount() {
         return this.amount;
     }
     
     public String getType() {
         return this.type;
+    }
+    
+    public int getUserId() {
+        return this.userid;
     }
     
     

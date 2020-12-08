@@ -21,21 +21,19 @@ public class ExpenseDao implements Dao<Expense, Integer> {
 
     @Override
     public void create(Expense expense) throws SQLException {
-        
-        try {
-            connection = tablesDao.connectToDatabase();
-            PreparedStatement s = connection.prepareStatement("INSERT INTO Expense"
-                + "(id, amount, type)"
-                + "VALUES(?,?,?)"); 
-            s.setInt(1, expense.getId());
-            s.setInt(2, expense.getAmount());
-            s.setString(3, expense.getType());
-            s.executeUpdate();
-            s.close();
-            connection.close();
-        } catch (SQLException e) {
-            
-        }
+
+        connection = tablesDao.connectToDatabase();
+        PreparedStatement s = connection.prepareStatement("INSERT INTO Expense"
+            + "(id, amount, type, user_id)"
+            + "VALUES(?,?,?,?)"); 
+        s.setInt(1, expense.getId());
+        s.setDouble(2, expense.getAmount());
+        s.setString(3, expense.getType());
+        s.setInt(4, expense.getUserId());
+        s.executeUpdate();
+        s.close();
+        connection.close();
+
         
     }
 
@@ -50,7 +48,7 @@ public class ExpenseDao implements Dao<Expense, Integer> {
             return null;
         }
         
-        Expense e = new Expense(rs.getInt("id"), rs.getInt("amount"), rs.getString("type"));
+        Expense e = new Expense(rs.getInt("id"), rs.getDouble("amount"), rs.getString("type"), rs.getInt("user_id"));
         
         s.close();
         rs.close();
@@ -65,7 +63,7 @@ public class ExpenseDao implements Dao<Expense, Integer> {
         
         connection = tablesDao.connectToDatabase();
         s = connection.prepareStatement("UPDATE Expense SET amount = ?, type = ? WHERE id = ?");
-        s.setInt(1, expense.getAmount());
+        s.setDouble(1, expense.getAmount());
         s.setString(2, expense.getType());
         s.setInt(3, expense.getId());
         s.executeUpdate();
@@ -80,17 +78,15 @@ public class ExpenseDao implements Dao<Expense, Integer> {
 
     @Override
     public void delete(Integer key) throws SQLException {
-        try {
-            connection = tablesDao.connectToDatabase();
-            s = connection.prepareStatement("DELETE FROM Expense WHERE id = ? ");
-            s.setInt(1, key);
-            s.executeUpdate();
-            s.close();
-            connection.close();
+
+        connection = tablesDao.connectToDatabase();
+        s = connection.prepareStatement("DELETE FROM Expense WHERE id = ? ");
+        s.setInt(1, key);
+        s.executeUpdate();
+        s.close();
+        connection.close();
             
-        } catch (SQLException e) {
-            
-        }
+
     }
 
     @Override
@@ -100,7 +96,7 @@ public class ExpenseDao implements Dao<Expense, Integer> {
         s = connection.prepareStatement("SELECT * FROM Expense");
         ResultSet rs = s.executeQuery();
         while (rs.next()) {
-            list.add(new Expense(rs.getInt("id"), rs.getInt("amount"), rs.getString("type")));
+            list.add(new Expense(rs.getInt("id"), rs.getDouble("amount"), rs.getString("type"), rs.getInt("user_id")));
         }
         s.close();
         rs.close();
@@ -120,8 +116,26 @@ public class ExpenseDao implements Dao<Expense, Integer> {
             s.close();
             connection.close();
         } catch (SQLException e) {
-            
+            System.out.println("Error while removing");
         }
+        
+    }
+    
+    public List<Expense> listUsingId(int id) throws SQLException {
+        List<Expense> list = new ArrayList<>();
+        connection = tablesDao.connectToDatabase();
+        s = connection.prepareStatement("SELECT * FROM Expense where user_id = ?");
+        s.setInt(1, id);
+        ResultSet rs = s.executeQuery();
+        while (rs.next()) {
+            list.add(new Expense(rs.getInt("id"), rs.getDouble("amount"), rs.getString("type"), rs.getInt("user_id")));
+        }
+        s.close();
+        rs.close();
+        connection.close();
+        
+        return list;
+       
         
     }
     

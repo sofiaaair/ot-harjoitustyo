@@ -1,3 +1,5 @@
+package daotests;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -23,13 +25,7 @@ public class UserDaoTest {
     public UserDaoTest() {
     }
     
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
+
     
     @Before
     public void setUp() {
@@ -39,77 +35,77 @@ public class UserDaoTest {
     
     @After
     public void tearDown() {
-    }
+        userDao.removeAll();
+    }    
    
     @Test
     public void createReturnsRigthName() throws Exception {
-        userDao.removeAll();
         
         userDao.create(user);
         
         assertEquals("Matti", userDao.read(1).getName());
-        userDao.removeAll();
+        
     }
     
     @Test
     public void createReturnsRigthUserame() throws Exception {
-        userDao.removeAll();
+        
         userDao.create(user);
         
         assertEquals("Matteo", userDao.read(1).getUsername());
-        userDao.removeAll();
+        
     }
     
     @Test
-    public void readReturnsRightUser() throws Exception{
-        userDao.removeAll();
+    public void readReturnsRightUser() throws Exception {
+        
         userDao.create(user);
         userDao.create(new User(2, "Olof", "hubiveikko", "mustikoira123"));
         
         User newUser = userDao.read(1);
         
         assertEquals(user.toString(), newUser.toString());
-        userDao.removeAll();
+        
         
     }
     
     @Test
-    public void updateUpdatesName() throws Exception{
-        userDao.removeAll();
+    public void updateUpdatesName() throws Exception {
+        
         userDao.create(user);
         
         User newUser = new User(1, "Erkki", "Matteo", "1234");
         userDao.update(newUser);
         assertEquals("Erkki", userDao.read(1).getName());
-        userDao.removeAll();
+        
     }
     
     @Test
-    public void updateUpdatesUserName() throws Exception{
-        userDao.removeAll();
+    public void updateUpdatesUserName() throws Exception {
+        
         userDao.create(user);
         
         User newUser = new User(1, "Matti", "GigitheGamer", "1234");
         userDao.update(newUser);
         assertEquals("GigitheGamer", userDao.read(1).getUsername());
-        userDao.removeAll();
+        
     }
     
     
     @Test
-    public void deleteDeletesRightUser() throws Exception{
-        userDao.removeAll();
+    public void deleteDeletesRightUser() throws Exception {
+        
         userDao.create(user);
         userDao.create(new User(2, "Maija", "Maikki88", "Ks350"));
        
         userDao.delete(2);
         userDao.create(new User(2, "Unto", "Untonen", "14930"));
         assertEquals("Id: 2 Name: Unto Username: Untonen Password: 14930", userDao.read(2).toString());
-        userDao.removeAll();
+        
     }
     
     @Test
-    public void removeAllRemovesAll() throws Exception{
+    public void removeAllRemovesAll() throws Exception {
         
         userDao.create(user);
         userDao.create(new User(2, "Maija", "Maikki88", "Ks350"));
@@ -120,5 +116,55 @@ public class UserDaoTest {
         
     }
     
+    @Test
+    public void listMethodsListsTheCorrectNumberOfUsers() throws Exception {
+        userDao.create(user);
+        userDao.create(new User(2, "Maija", "Maikki88", "Ks350"));
+        userDao.create(new User(3, "Unto", "Untonen", "14930"));
+        userDao.create(new User(4, "Saara", "Gamer98", "go9382"));
+        assertTrue(userDao.list().size() == 4);
+        
+    }
+    
+    
+    @Test
+    public void listMethodListsUsers() throws Exception {
+        
+        userDao.create(user);
+        userDao.create(new User(3, "Maija", "Maikki88", "Ks350"));
+        userDao.create(new User(2, "Unto", "Untonen", "14930"));
+        
+        assertEquals("Unto", userDao.list().get(1).getName());
+        
+        
+    }
+    
+    @Test
+    public void readUsingUsernameReturnsRigthUser() throws Exception {
+        
+        userDao.create(user);
+        userDao.create(new User(2, "Unto", "Untonen", "14930"));
+        User another = userDao.readUsingUsername("Matteo", "1234");
+        assertEquals(user.toString(), another.toString());
+        
+        
+    }
+    
+    @Test
+    public void readUsingUsernameReturnsNull() throws Exception {
+       
+        User another = userDao.readUsingUsername("Matteo", "1234");
+        assertEquals(null, another);
+        
+        
+    }
+    
+    @Test
+    public void readUsingUsernameHasRightParameter() throws Exception {
+        
+        userDao.create(user);
+        String password = userDao.readUsingUsername("Matteo", "1234").getPassword();
+        assertEquals(user.getPassword(), password);
+    }
     
 }
