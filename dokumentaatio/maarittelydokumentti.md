@@ -1,7 +1,7 @@
 <h1> Kulunseurantasovellus </h1>
 
 <h2> Käyttäjät </h2>
-Sovellukseen voi luoda tunnuksen ja kirjautua sisään.
+Sovellukseen voi luoda tunnuksen ja kirjautua sisään. [TEHTY VIIKOLLA 6]
 Käyttäjällä on nimi, käyttäjänimi ja salasana.
 Käyttäjä voi seurata omaa rahankäyttöään syöttämällä tietoa menoista.
 
