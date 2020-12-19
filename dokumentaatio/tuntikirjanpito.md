@@ -9,4 +9,8 @@ Päivä | Aika | Tekeminen
 1.12  | 11 | Testikattavuuden parantelu, toiminnallisuuden päivitystä
 7.12  | 8 | User-luokan lisääminen, graafisen ulkoasun parantelu
 8.12  | 7 | Testikattavuus ajantasalle, muutoksia graafiseen toteutukseen
-YHTEENSÄ: | 44 |
+15.12 | 4 | Income ja Plan- luokan toteutus, muutoksia graafiseen toteutukseen
+16.12 | 4 | Graafisen toteutuksen muutoksia
+18.12 | 5 | Income ja Plan- luokan poisjättäminen, testiluokkien päivittäminen, ulkoasun viilausta
+19.12 | 4 | JavaDoc ja arkkitehtuuripäivitystä
+YHTEENSÄ: | 61 |
