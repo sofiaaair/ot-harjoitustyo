@@ -40,17 +40,21 @@ Kun painetaan painiketta createUserButton, etenee sovelluksen kontrolli seuraava
 
 <h3> Käyttäjän kirjautuminen </h3>
 Käyttäjä kirjoittaa nimikenttään käyttäjätunnuksensa ja salasanansa, jotka ovat voimassa. Klikattaessa loginButton-painiketta, etenee sovelluksen kontrolli seuraavasti:
+
 ![Image of Kirjautuminen](https://github.com/sofiaaair/ot-harjoitustyo/blob/master/dokumentaatio/kuvat/Kirjautuminen.png)
 
 
 <h3> Kulun lisääminen </h3>
 Uuden kulun luovan sendButton- painikkeen klikkaamisen jälkeen sovelluksen kontrolli etenee seuraavasti:
+
 ![Image of Kulunlisays](https://github.com/sofiaaair/ot-harjoitustyo/blob/master/dokumentaatio/kuvat/Kulunlisays.png)
 
 <h3> Kulun poistaminen </h3>
 Kulun poistavan removeExpenseButton- painikkeen klikkaamisen jälkeen sovelluksen kontrolli etenee seuraavasti:
+
 ![Image of Kulunpoisto](https://github.com/sofiaaair/ot-harjoitustyo/blob/master/dokumentaatio/kuvat/Kulunpoisto.png)
 
 <h3> Kulun listaaminen </h3>
 Kulut listaavan showButton- painikkeen klikkaamisen jälkeen sovelluksen kontrolli etenee seuraavasti:
+
 ![Image of Kulujenlistaus](https://github.com/sofiaaair/ot-harjoitustyo/blob/master/dokumentaatio/kuvat/Kulujenlistaus.png)
