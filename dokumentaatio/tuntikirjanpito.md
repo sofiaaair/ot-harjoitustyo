@@ -13,4 +13,5 @@ Päivä | Aika | Tekeminen
 16.12 | 4 | Graafisen toteutuksen muutoksia
 18.12 | 5 | Income ja Plan- luokan poisjättäminen, testiluokkien päivittäminen, ulkoasun viilausta
 19.12 | 4 | JavaDoc ja arkkitehtuuripäivitystä
-YHTEENSÄ: | 61 |
+20.12 | 6 | Viimeiset viilaukset
+YHTEENSÄ: | 67 |
