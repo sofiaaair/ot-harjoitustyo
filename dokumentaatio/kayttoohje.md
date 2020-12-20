@@ -32,9 +32,9 @@ Aloitusnäytössä painettiin nappia _Sign in_ ja päästiin kirjautumisnäkymä
 
 ![Image of Kirjautumisnakyma](https://github.com/sofiaaair/ot-harjoitustyo/blob/master/dokumentaatio/kuvat/ohjeKirjautuminen.png)
 
-Nyt kirjoitetaan luotu käyttäjänimi _Username:_ -tekstiä seuraavaan tekstikenttään ja salasana _Password:_ - tekstiä seuraavaan tekstikenttään.
+Nyt kirjoitetaan luotu käyttäjänimi _Username:_- tekstiä seuraavaan tekstikenttään ja salasana _Password:_- tekstiä seuraavaan tekstikenttään.
 
-_Login_ -nappulasta pääsee kirjautumaan sisään.
+_Login_- nappulasta pääsee kirjautumaan sisään.
 
 _Return_ palauttaa näkymän takaisin aloitusnäkymään.
 
@@ -55,9 +55,9 @@ _Log out_ kirjaa käyttäjän ulos ja palaa aloitusnäkymään.
 ![Image of kulunluonto](https://github.com/sofiaaair/ot-harjoitustyo/blob/master/dokumentaatio/kuvat/ohjeKulunLuonti.png)
 
 Haluttu kulutettu rahasumma lisätään _Amount:_ -tekstiä seuraavaan tekstikenttään. Kulun tyypin saa valittua _Type of expense:_ -tekstiä seuraavasta valintalaatikosta.
-Mahdollisia kulun tyyppejä ovat _housing_ , _leisure activities_ , _shopping_ , _traveling_ , _food_ , ja _other_ .
+Mahdollisia kulun tyyppejä ovat _housing_, _leisure activities_, _shopping_, _traveling_, _food_, ja _other_.
 Painamalla _Enter_ painiketta kulu lisätään ohjelmaan.
-_Entered expenses_ -nappia painamalla pääsee tarkastelemaan syötettyjä kuluja.
+_Entered expenses_-nappia painamalla pääsee tarkastelemaan syötettyjä kuluja.
 _Return_ palauttaa takaisin käyttäjänäymään.
 
 
@@ -65,7 +65,7 @@ _Return_ palauttaa takaisin käyttäjänäymään.
 
 ![Image of kuluntarkastelu](https://github.com/sofiaaair/ot-harjoitustyo/blob/master/dokumentaatio/kuvat/ohjeKulunTarkastelu.png)
 
-_Show all expenses_ - nappia painamalla saa näkyviin ympyrädiagrammin kaikista käyttäjän syöttämistä kuluista.
+_Show all expenses_- nappia painamalla saa näkyviin ympyrädiagrammin kaikista käyttäjän syöttämistä kuluista.
 
 Yksittäisten kulun tyyppien yhteenvedon saa tulostetuksi valitsemalla valintalaatikosta halutun kulun tyypin ja painamalla _Show expenses by type_ -nappia. Yhteenveto tulostuu ympyrädiagrammin viereen.
 
