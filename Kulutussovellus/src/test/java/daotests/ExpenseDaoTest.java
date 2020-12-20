@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import kulutussovellus.dao.ExpenseDao;
+import kulutussovellus.dao.TablesDao;
 import kulutussovellus.domain.Expense;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -26,20 +27,21 @@ import static org.junit.Assert.*;
  */
 public class ExpenseDaoTest {
     
+    TablesDao tablesDao;
     ExpenseDao expenseDao;
     Expense expense;
   
     
     public ExpenseDaoTest() {
     }
-    
 
-    
     @Before
     public void setUp() {
         expenseDao = new ExpenseDao();
+        tablesDao = new TablesDao();
         expenseDao.removeAll();
         expense = new Expense(1, 500, "Asuminen",1);
+        tablesDao.create();
       
        
     }

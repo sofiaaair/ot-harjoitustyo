@@ -6,6 +6,7 @@ package daotests;
  * and open the template in the editor.
  */
 
+import kulutussovellus.dao.TablesDao;
 import kulutussovellus.dao.UserDao;
 import kulutussovellus.domain.User;
 import org.junit.After;
@@ -22,6 +23,7 @@ import static org.junit.Assert.*;
 public class UserDaoTest {
     UserDao userDao;
     User user;
+    TablesDao tablesDao;
     public UserDaoTest() {
     }
     
@@ -31,6 +33,8 @@ public class UserDaoTest {
     public void setUp() {
         userDao = new UserDao();
         userDao.removeAll();
+        tablesDao = new TablesDao();
+        tablesDao.create();
         user= new User(1, "Matti", "Matteo", "1234");
     }
     

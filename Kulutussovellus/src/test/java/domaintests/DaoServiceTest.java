@@ -30,6 +30,7 @@ import org.sqlite.jdbc4.JDBC4Connection;
  */
 public class DaoServiceTest {
     
+    
     DaoService daoService;
     ExpenseDao expenseDao;
     UserDao userDao;
@@ -51,6 +52,7 @@ public class DaoServiceTest {
         expenseDao.removeAll();
         userDao.removeAll();
         tablesDao = new TablesDao();
+        tablesDao.create();
         expense = new Expense(400, "housing", 1);
         user = new User(1, "Mikko Mallikas", "Mikk088", "12345");
         
