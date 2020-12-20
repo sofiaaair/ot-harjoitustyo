@@ -6,4 +6,12 @@
 
 <suppressions>
     <suppress files="kulutussovellus.ui.KulutussovellusUi.java" checks="[a-zA-Z0-9]*"/>
+    <suppress files="kulutussovellus.ui.CreateUserScreen.java" checks="[a-zA-Z0-9]*"/>
+    <suppress files="kulutussovellus.ui.EditExpenseScreen.java" checks="[a-zA-Z0-9]*"/>
+    <suppress files="kulutussovellus.ui.EnterExpenseScreen.java" checks="[a-zA-Z0-9]*"/>
+    <suppress files="kulutussovellus.ui.LogInScreen.java" checks="[a-zA-Z0-9]*"/>
+    <suppress files="kulutussovellus.ui.ShowExpensesScreen.java" checks="[a-zA-Z0-9]*"/>
+    <suppress files="kulutussovellus.ui.UserMenuScreen.java" checks="[a-zA-Z0-9]*"/>
+    <suppress files="kulutussovellus.ui.WelcomeScreen.java" checks="[a-zA-Z0-9]*"/>
+    
 </suppressions>
