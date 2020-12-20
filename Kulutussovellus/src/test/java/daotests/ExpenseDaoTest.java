@@ -39,6 +39,7 @@ public class ExpenseDaoTest {
     public void setUp() {
         expenseDao = new ExpenseDao();
         tablesDao = new TablesDao();
+        tablesDao.create();
         expenseDao.removeAll();
         expense = new Expense(1, 500, "Asuminen",1);
         tablesDao.create();
