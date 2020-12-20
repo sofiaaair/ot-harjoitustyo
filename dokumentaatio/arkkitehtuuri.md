@@ -5,7 +5,7 @@
 Ohjelman rakenne noudattaa kolmitasoisa kerrosarkkitehtuuria. Koodin käyttöliittymä löytyy pakkauksesta kulutussovellus.ui, sovelluslogiikka pakkauksesta kulutussovellus.domain, ja datan tallennuksesta vastaa pakkaus kulutussovellus.dao.
 Pakkaustakenne näyttää tältä:
 
-![Image of pakkausrakenne](https://github.com/sofiaaair/ot-harjoitustyo/tree/master/dokumentaatio/kuvat/rakenne.png)
+![Image of rakenne](https://github.com/sofiaaair/ot-harjoitustyo/blob/master/dokumentaatio/kuvat/rakenne.png)
 
 Käyttöliittymä on toteutettu JavaFX:llä, pysyväistallennus löytyy pakkauksesta kulutussovellus.dao.
 
@@ -37,7 +37,7 @@ Käyttöliittymä pyrkii olemaan täysin eriytettynä  sovelluslogiikasta. Se ko
 
 Luokat Expense ja User luovat sovelluksen loogisen datamallin, ne kuvaavat käyttäjiä ja käyttäjän järjestelmään syöttämiä kuluja:
 
-![Image of datamalli](https://github.com/sofiaaair/ot-harjoitustyo/tree/master/dokumentaatio/kuvat/datamalli.jpg)
+![Image of datamalli](https://github.com/sofiaaair/ot-harjoitustyo/blob/master/dokumentaatio/kuvat/datamalli.jpg)
 
 Toiminnallisista kokonaisuuksista vastaa DaoService, joka tarjoaa kaikille käyttäjäliittymän toiminnoille oman metodinsa, joita ovat esimerkiksi:
 
@@ -65,7 +65,7 @@ DaoService pääsee käsiksi kuluihin ja käyttäjiin pakkauksessa kulutussovell
 
 DaoServicen ja muiden ohjelman osien suhdetta kuvaava luokka/pakkauskaavio näyttää seuraavalta:
 
-![Image of luokkapakkauskaavio](https://github.com/sofiaaair/ot-harjoitustyo/tree/master/dokumentaatio/kuvat/luokkapakkauskaavio.png)
+![Image of luokkapakkauskaavio](https://github.com/sofiaaair/ot-harjoitustyo/blob/master/dokumentaatio/kuvat/luokkapakkauskaavio.png)
 
 
 <h2> Tietojen pysyväistallennus </h2>
