@@ -30,6 +30,7 @@ public class UserDaoTest {
     @Before
     public void setUp() {
         userDao = new UserDao();
+        userDao.removeAll();
         user= new User(1, "Matti", "Matteo", "1234");
     }
     

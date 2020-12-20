@@ -90,7 +90,7 @@ public class UserDao implements Dao<User, Integer> {
         
     }
 
-    @Override
+    
     public List<User> list() throws SQLException {
         List<User> list = new ArrayList<>();
         connection = tablesDao.connectToDatabase();

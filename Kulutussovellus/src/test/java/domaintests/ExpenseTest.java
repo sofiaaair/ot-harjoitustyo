@@ -31,19 +31,19 @@ public class ExpenseTest {
 
     @Test
     public void constructorSetCorrectValues() {
-        assertEquals("1 500.0 Asuminen", expense.toString());
+        assertEquals("500.0 Asuminen", expense.toString());
     }
     
     @Test
     public void typeUpdateWorks(){
         expense.setType("Ruoka");
-        assertEquals("1 500.0 Ruoka", expense.toString());
+        assertEquals("500.0 Ruoka", expense.toString());
     }
     
     @Test
     public void amountUpdateWorks(){
         expense.setAmount(50.0);
-        assertEquals("1 50.0 Asuminen", expense.toString());
+        assertEquals("50.0 Asuminen", expense.toString());
     }
     
     @Test

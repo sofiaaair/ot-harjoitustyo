@@ -1,31 +1,15 @@
 
 package kulutussovellus.ui;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Application;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.chart.PieChart;
 import javafx.stage.Stage;
-import kulutussovellus.dao.DaoService;
-import kulutussovellus.dao.ExpenseDao;
-import kulutussovellus.dao.TablesDao;
+import kulutussovellus.domain.DaoService;
 import kulutussovellus.domain.Expense;
 import kulutussovellus.domain.User;
 
@@ -33,6 +17,15 @@ import kulutussovellus.domain.User;
 public class KulutussovellusUi extends Application {
     
     DaoService daoService;
+    PieChart pieChart;
+    Integer currentId;
+    WelcomeScreen welcomeScreen;
+    CreateUserScreen createUserScreen;
+    LogInScreen logInScreen;
+    UserMenuScreen userMenu;
+    EnterExpenseScreen enterExpenseScreen;
+    ShowExpensesScreen showExpensesScreen;
+    EditExpenseScreen editExpenseScreen;
     
     
     
@@ -45,277 +38,268 @@ public class KulutussovellusUi extends Application {
        }catch(SQLException e){
            System.out.println("Error occurred while running init ");
        }
-       GridPane welcomeScreen = new GridPane();
-       Label welcomeText = new Label("Welcome to expense tracking application! ");
-       Button signInButton = new Button("Sign in");
-       Button signUpButton = new Button("Sign up");
-       HBox buttonHb = new HBox();
-       buttonHb.getChildren().addAll(signInButton, signUpButton);
+       //Application's welcome view
        
-       welcomeScreen.add(welcomeText, 0, 0);
-       welcomeScreen.add(buttonHb, 0, 1);
-       
-        welcomeScreen.setPrefSize(600, 400);
-        welcomeScreen.setAlignment(Pos.CENTER);
-        welcomeScreen.setVgap(20);
-        welcomeScreen.setHgap(20);
-        welcomeScreen.setPadding(new Insets(40,40,40,40));       
-       Scene welcomeScene = new Scene(welcomeScreen);
+       welcomeScreen.buildWelcomeScreen();
+       Scene welcomeScene = new Scene(welcomeScreen.welcomeScreen);
        
         
        
+       //The view where a new user is created
        
-       GridPane createUserScreen = new GridPane();
-       Label createUserErrorLabel = new Label();
-       Label createUsernameLabel = new Label("Username: ");
-       Label createPasswordLabel = new Label("Password: ");
-       Label createNameLabel = new Label("Your name: ");
+       createUserScreen.buildCreateUserScreen();
+       Scene signUpScene = new Scene(createUserScreen.createUserScreen);
        
-       TextField createUsernameTextField = new TextField();
-       TextField createPasswordTextField = new TextField();
-       TextField createNameTextField = new TextField();
        
-       Button createUserButton = new Button("Create user");
-       Button returnToStartButton = new Button("Return");
-       HBox createUsernameHb = new HBox();
-       createUsernameHb.getChildren().addAll(createUsernameLabel, createUsernameTextField);
+       
+       // The view to log in
+       
+       logInScreen.buildLoginScreen();
+       Scene logInScene = new Scene(logInScreen.logInScreen);
+       
+        
+       // The user's personal home screen
+       
+       userMenu.buildUserMenuScreen();
+       Scene userMenuScene = new Scene(userMenu.userMenu);
+       
+       //The view where a new expense is created
+       
 
-       HBox createPasswordHb = new HBox();
-       createPasswordHb.getChildren().addAll(createPasswordLabel, createPasswordTextField);
-
-       HBox createNameHb = new HBox();
-       createNameHb.getChildren().addAll(createNameLabel, createNameTextField);       
-       
-       createUserScreen.setPrefSize(600,400);
-       createUserScreen.add(createUserErrorLabel, 0, 0);
-       createUserScreen.add(createUsernameHb, 0, 1);
-       createUserScreen.add(createPasswordHb, 0, 2);
-       createUserScreen.add(createNameHb, 0, 3);
-       createUserScreen.add(createUserButton, 0, 4);
-       createUserScreen.add(returnToStartButton, 1, 4);
-       createUserScreen.setAlignment(Pos.CENTER);  
-       
-       Scene signUpScene = new Scene(createUserScreen);
-       
-       
-       
-       
-       GridPane logInScreen = new GridPane();
-       Label loginErrorLabel = new Label();
-       Label usernameLabel = new Label("Username: ");
-       Label passwordLabel = new Label("Password: ");
-       TextField usernameTextField= new TextField();
-       PasswordField passwordField = new PasswordField();
-       Button loginButton = new Button("Login");
-       Button backToStartButton = new Button("Return");
-       
-       HBox usernameLabelHb = new HBox();
-       usernameLabelHb.getChildren().addAll(usernameLabel, usernameTextField);
-       
-       HBox passwordLabelHb = new HBox();
-       passwordLabelHb.getChildren().addAll(passwordLabel, passwordField);
-       
-       logInScreen.setPrefSize(600, 400);
-       logInScreen.add(loginErrorLabel, 0, 0);
-       logInScreen.add(usernameLabelHb, 0, 1);
-       logInScreen.add(passwordLabelHb, 0, 2);
-       logInScreen.add(loginButton, 0,3);
-       logInScreen.add(backToStartButton, 1,3);
-       logInScreen.setAlignment(Pos.CENTER);  
-       
-       Scene logInScene = new Scene(logInScreen);
-       
+        enterExpenseScreen.buildEnterExpenseScreen();
+        Scene addExpenseScene = new Scene(enterExpenseScreen.enterExpenseScreen);
         
+        
+        
+        // The view where user can view entered expenses
+        
+        showExpensesScreen.buildShowExpenseScreen(pieChart);
+        Scene showExpenseScene = new Scene(showExpensesScreen.showExpensesScreen);
+        
+        
+        //The view where user can edit entered objects
        
-       
-       GridPane userMenu = new GridPane();
-       Label welcomeUserText = new Label("Welcome ");
-       Label welcomeUserText2 = new Label("Your id is: ");
-       Label currentName = new Label();
-       Label currentUserId = new Label();   
-       Button expenseMenuButton = new Button("Add expenses");
-       Button viewExpensesButton = new Button("View your expenses");
-       Button logoutUserMenuButton = new Button("Log out");
-
-
-       userMenu.setPrefSize(600, 400);
-       userMenu.add(logoutUserMenuButton, 1, 0);
-       userMenu.add(welcomeUserText, 0, 3);
-       userMenu.add(currentName, 1, 3);
-       userMenu.add(welcomeUserText2, 0,4);
-       userMenu.add(currentUserId, 1,4);
-       userMenu.add(expenseMenuButton, 0, 5);
-       userMenu.add(viewExpensesButton, 1, 5);
-       
-       userMenu.setAlignment(Pos.CENTER);         
-       
-       Scene userMenuScene = new Scene(userMenu);
-       
-       
-       
-        GridPane enterExpenseScreen = new GridPane();
-        Label expenseUser = new Label();
-        Label expenseUserId = new Label();
-        Label expenseText = new Label("Hello, ");
-        Label text = new Label("Enter the amount and type of expense");
-        Label errorText = new Label();
-        Label amountlabel = new Label("Amount: ");
-        TextField amounttext = new TextField();
-        Label typelabel = new Label("Type of expense: ");
-        TextField typetext = new TextField();
-        
-        HBox expenseTextHb = new HBox();
-        expenseTextHb.getChildren().addAll(expenseText, expenseUser);
-        
-        HBox typeLabelHb = new HBox();
-        typeLabelHb.getChildren().addAll(typelabel, typetext);
-        
-        HBox amountLabelHb = new HBox();
-        amountLabelHb.getChildren().addAll(amountlabel, amounttext);
-        
-        VBox vb = new VBox();
-        vb.getChildren().addAll(text, errorText, amountLabelHb, typeLabelHb);
-        Button sendbutton = new Button("Enter");
-        
-        Button button = new Button("Entered expenses");
-        Button backToUsermenuButton = new Button("Return");
-        
-        enterExpenseScreen.add(expenseTextHb, 0, 0);
-        enterExpenseScreen.add(vb, 0, 1);
-        enterExpenseScreen.add(sendbutton, 0,2);
-        enterExpenseScreen.add(button, 0,3);
-        enterExpenseScreen.add(backToUsermenuButton, 1,3);
-        
-        enterExpenseScreen.setPrefSize(600,400);
-        enterExpenseScreen.setAlignment(Pos.CENTER);
-        enterExpenseScreen.setVgap(20);
-        enterExpenseScreen.setHgap(20);
-        enterExpenseScreen.setPadding(new Insets(40,40,40,40));
-        
-        Scene addExpenseScene = new Scene(enterExpenseScreen);
+        editExpenseScreen.buidlEditExpenseScreen();
+        Scene editExpensesScene = new Scene(editExpenseScreen.editExpensesScreen);
         
         
         
         
-        GridPane showExpensesScreen = new  GridPane();
-        Label showExpensesUserId = new Label();
         
-        Label text2 = new Label("Expenses:");
-        Label expenses = new Label();
-        Button showButton = new Button("Show expenses");
-        Button backToFirstPage= new Button("Return");
-
-        showExpensesScreen.setPrefSize(600, 400);
-        showExpensesScreen.add(text2, 0, 0);
-        showExpensesScreen.add(showButton, 0,1);
-        showExpensesScreen.add(expenses, 0,3);
-        showExpensesScreen.add(backToFirstPage, 0,4);
-        showExpensesScreen.setAlignment(Pos.CENTER);
-        
-        Scene showExpenseScene = new Scene(showExpensesScreen);
+        // The functionalities of the buttons used in the program can be found here
         
         
         
-        sendbutton.setOnAction((event)->{
+        
+        //Button to create the new expense
+        enterExpenseScreen.sendbutton.setOnAction((event)->{
+            
+            if(enterExpenseScreen.typetext.getText().isEmpty()){
+                enterExpenseScreen.errorText.setText("Type info is missing");
+            }else{    
             
            try {
-               errorText.setText("");
-               daoService.createExpense(amounttext.getText(), typetext.getText(), expenseUserId.getText());
+               enterExpenseScreen.errorText.setText("");
+               daoService.createExpense(enterExpenseScreen.amounttext.getText(), enterExpenseScreen.typetext.getText(), String.valueOf(currentId));
+               enterExpenseScreen.errorText.setText("");
            } catch (Exception ex) {
                
-               errorText.setText("Error occurred while creating expense");
+               enterExpenseScreen.errorText.setText("Error occurred while creating expense");
            }
-           amounttext.clear();
-           typetext.clear();
+            }
+           enterExpenseScreen.amounttext.clear();
             
         });
         
         
         
-        button.setOnAction((event)->{
+        enterExpenseScreen.button.setOnAction((event)->{
+            pieChart.getData().clear();
+            showExpensesScreen.expenses.setText("");         
             stage.setScene(showExpenseScene);
-            showExpensesUserId.setText(expenseUserId.getText());
+
         });
         
         
        
-        signInButton.setOnAction((event)->{
+        welcomeScreen.signInButton.setOnAction((event)->{
             stage.setScene(logInScene);
         });     
         
-        signUpButton.setOnAction((event)->{
+        welcomeScreen.signUpButton.setOnAction((event)->{
             stage.setScene(signUpScene);
         });          
         
+        //Button to create the new user
         
-        createUserButton.setOnAction((event)->{
+        createUserScreen.createUserButton.setOnAction((event)->{
             try{
-                createUserErrorLabel.setText("");
-                daoService.createUser(createNameTextField.getText(), createUsernameTextField.getText(), createPasswordTextField.getText());
-            }catch(Exception e){
-                createUserErrorLabel.setText("Error while creating user");
-            }
-            createUsernameTextField.clear();
-            createPasswordTextField.clear();
-            createNameTextField.clear();
-        });    
-        
-        
-        loginButton.setOnAction((event)->{
-            try{
-                loginErrorLabel.setText("");
-                int loginId=daoService.loginUser(usernameTextField.getText(), passwordField.getText()); 
-                User user = daoService.readUser(loginId);
-                stage.setScene(userMenuScene);
-                currentUserId.setText(String.valueOf(user.getId()));
-                currentName.setText(user.getName());
+                if(!(createUserScreen.createNameTextField.getText().isEmpty()) && !(createUserScreen.createPasswordTextField.getText().isEmpty()) && !(createUserScreen.createUsernameTextField.getText().isEmpty())){
+                createUserScreen.createUserErrorLabel.setText("");
+                daoService.createUser(createUserScreen.createNameTextField.getText(), createUserScreen.createUsernameTextField.getText(), createUserScreen.createPasswordTextField.getText());
+                }else{
+                    createUserScreen.createUserErrorLabel.setText("Fill all text fields");
+                }
                 
             }catch(Exception e){
-                loginErrorLabel.setText("Invalid username or password");
+                createUserScreen.createUserErrorLabel.setText("Error while creating user");
             }
-        });
+            createUserScreen.createUsernameTextField.clear();
+            createUserScreen.createPasswordTextField.clear();
+            createUserScreen.createNameTextField.clear();
+        });    
         
-        expenseMenuButton.setOnAction((event)->{
-            stage.setScene(addExpenseScene);
-            expenseUserId.setText(currentUserId.getText());
-            expenseUser.setText(currentName.getText());
+        //Program login button
         
-        });
-        
-        showButton.setOnAction((event)->{
+        logInScreen.loginButton.setOnAction((event)->{
             try{
-            String textToAdd = daoService.listExpense(Integer.valueOf(showExpensesUserId.getText()));
-            
-            expenses.setText(textToAdd);
+                logInScreen.loginErrorLabel.setText("");
+                int loginId=daoService.loginUser(logInScreen.usernameTextField.getText(), logInScreen.passwordField.getText()); 
+                logInScreen.usernameTextField.clear();
+                logInScreen.passwordField.clear();
+                User user = daoService.readUser(loginId);
+                stage.setScene(userMenuScene);
+                currentId = user.getId();
+                userMenu.currentUserId.setText(String.valueOf(user.getId()));
+                userMenu.currentName.setText(user.getName());
+                
             }catch(Exception e){
-                expenses.setText("Error occurred while listing");
+                logInScreen.loginErrorLabel.setText("Invalid username or password");
             }
         });
         
-        backToFirstPage.setOnAction((event)->{
+        userMenu.expenseMenuButton.setOnAction((event)->{
+            enterExpenseScreen.expenseUser.setText(userMenu.currentName.getText());
             stage.setScene(addExpenseScene);
         });
         
-        viewExpensesButton.setOnAction((event)->{
+        // Button to show all expenses
+        showExpensesScreen.showButton.setOnAction((event)->{
+           try {
+               getPieChartData(currentId);
+           } catch (SQLException ex) {
+               showExpensesScreen.showExpensesErrorLabel.setText("Error while creating diagram");
+           }
+        });
+        
+        //Button to show expenses by type
+        showExpensesScreen.showByTypeButton.setOnAction((event)->{
+            try{
+                showExpensesScreen.showExpensesErrorLabel.setText("");
+               String StringToAdd = daoService.listExpense(showExpensesScreen.showByTypeLabel.getText(), currentId);
+               showExpensesScreen.expenses.setText(StringToAdd);
+            }catch(Exception e){
+                showExpensesScreen.showExpensesErrorLabel.setText("Error occurred while listing expenses");
+            }
+        });
+        
+        //Button to show sum of all expenses
+        showExpensesScreen.showAllExpensesButton.setOnAction((event)->{
+            try{
+                showExpensesScreen.showExpensesErrorLabel.setText("");
+                showExpensesScreen.sumExpensesLabel.setText("Total sum of expenses: " + daoService.totalSumOfExpenses(currentId));
+                
+            }catch(Exception e){
+                showExpensesScreen.showExpensesErrorLabel.setText("Error while summing");
+            }
+        
+        });
+        
+
+        
+        showExpensesScreen.backToFirstPage.setOnAction((event)->{
+            showExpensesScreen.expenses.setText("");
+            showExpensesScreen.sumExpensesLabel.setText("");
+            userMenu.currentUserId.setText(String.valueOf(currentId));
+           try {
+              userMenu.currentName.setText(daoService.readUser(currentId).getName());
+           } catch (SQLException ex) {
+               userMenu.welcomeUserErrorLabel.setText("Missing id, please log out");
+           }
+            
+            stage.setScene(userMenuScene);
+            
+        });
+        
+
+        
+        userMenu.viewExpensesButton.setOnAction((event)->{
+            showExpensesScreen.expenses.setText("");
+            showExpensesScreen.showExpensesErrorLabel.setText("");
+            pieChart.getData().clear();        
+            try{
+                getPieChartData(currentId);
+            }catch(Exception e){
+                showExpensesScreen.showExpensesErrorLabel.setText("Error occurred while listing expenses");
+            }            
             stage.setScene(showExpenseScene);
-            showExpensesUserId.setText(currentUserId.getText());
+           
+        }); 
+        
+        showExpensesScreen.toEditExpenseButton.setOnAction((event)->{
+            showExpensesScreen.expenses.setText("");
+            showExpensesScreen.sumExpensesLabel.setText("");
+            stage.setScene(editExpensesScene);
+        try {
+            editExpenseScreen.expenseListView.getItems().clear();
+            editExpenseScreen.expenseListView.getItems().addAll(daoService.listAllExpenses(currentId));
+        } catch (SQLException ex) {
+            
+        }            
+            
+        });
+        
+        //Button to remove desired expense
+        
+        editExpenseScreen.removeExpenseButton.setOnAction((event)->{
+            editExpenseScreen.expenseListView.getItems().clear();
+            
+           try {
+               daoService.deleteExpense(Integer.valueOf(editExpenseScreen.deletedOne.getText()));
+               editExpenseScreen.expenseListView.getItems().addAll(daoService.listAllExpenses(currentId));
+           } catch (SQLException e) {
+               
+           } catch(NumberFormatException ex){
+               
+           }
+                    
+        });
+        
+        
+        editExpenseScreen.returnBackButton.setOnAction((event)->{
+            showExpensesScreen.showExpensesErrorLabel.setText("");
+            editExpenseScreen.expenseListView.getItems().clear();
+            pieChart.getData().clear();
+           try {            
+               getPieChartData(currentId);
+           } catch (SQLException ex) {
+              showExpensesScreen.showExpensesErrorLabel.setText("Error while creating diagram");
+           }
+            stage.setScene(showExpenseScene);
         });
 
-        backToStartButton.setOnAction((event)->{
+        logInScreen.backToStartButton.setOnAction((event)->{
             stage.setScene(welcomeScene);
         });
         
-        returnToStartButton.setOnAction((event)->{
+        createUserScreen.returnToStartButton.setOnAction((event)->{
             stage.setScene(welcomeScene);
         });
         
-        backToUsermenuButton.setOnAction((event)->{
-            currentUserId.setText(expenseUserId.getText());
-            currentName.setText(expenseUser.getText());
+        enterExpenseScreen.backToUsermenuButton.setOnAction((event)->{
+            
+            userMenu.currentUserId.setText(String.valueOf(currentId));
+            userMenu.currentName.setText(enterExpenseScreen.expenseUser.getText());
             stage.setScene(userMenuScene);
         });
         
-        logoutUserMenuButton.setOnAction((event)->{
+        //Button to log out of system
+        userMenu.logoutUserMenuButton.setOnAction((event)->{
+            currentId = null;
+            userMenu.currentUserId.setText(null);
+            userMenu.currentName.setText(null);
+            enterExpenseScreen.expenseUser.setText(null);
+            
             stage.setScene(welcomeScene);
         });
         
@@ -324,12 +308,68 @@ public class KulutussovellusUi extends Application {
         stage.show();
     }
     
-    public void init() throws SQLException{
+    private void getPieChartData(int id) throws SQLException {
+        
+        pieChart.getData().clear();
+        List<Expense> expensesOnTheList = daoService.listAllExpenses(id);
+        double housing = 0;
+        double freetime = 0;
+        double traveling = 0;
+        double shopping = 0;
+        double food = 0;
+        double other = 0;
+        for(Expense e: expensesOnTheList){
+            if(e.getType().equals("housing")){
+                housing += e.getAmount();
+            }
+            if(e.getType().equals("leisure activities")){
+                freetime += e.getAmount();
+            }
+            if(e.getType().equals("shopping")){
+                shopping += e.getAmount();
+            }
+            if(e.getType().equals("food")){
+                food += e.getAmount();
+            }
+            if(e.getType().equals("traveling")){
+                traveling += e.getAmount();
+            }
+            if(e.getType().equals("other")){
+                other += e.getAmount();
+            }            
+        }
+        ObservableList<PieChart.Data> pieChartData=
+                FXCollections.observableArrayList(
+                new PieChart.Data("Housing", housing),
+                new PieChart.Data("Leisure activities", freetime),
+                new PieChart.Data("Food", food),
+                new PieChart.Data("Traveling", traveling),
+                new PieChart.Data("Other", other),
+                new PieChart.Data("Shopping", shopping));
+
+        pieChart.getData().addAll(pieChartData);        
+
+    }
+    
+    /**
+     * This method initializes daoService and pieChart object
+     * 
+     * @throws SQLException 
+     */
+    public void init() throws SQLException {
         
         daoService= new DaoService();
         daoService.createTablesDao();
-        
+        pieChart = new PieChart();
+        welcomeScreen = new WelcomeScreen();
+        createUserScreen = new CreateUserScreen();
+        logInScreen = new LogInScreen();
+        userMenu= new UserMenuScreen();
+        enterExpenseScreen = new EnterExpenseScreen();
+        showExpensesScreen = new ShowExpensesScreen();
+        editExpenseScreen = new EditExpenseScreen();
     }
+    
     
     public static void main(String[] args) throws SQLException {
         

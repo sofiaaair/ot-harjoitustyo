@@ -1,7 +1,7 @@
 package kulutussovellus;
 
 import java.sql.SQLException;
-import kulutussovellus.dao.DaoService;
+import kulutussovellus.domain.DaoService;
 import kulutussovellus.ui.KulutussovellusUi;
 
 
